@@ -14,5 +14,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag nginx-proxy:$(date +%s)
+    - name: Build & Push Image
+      run: |
+        TAG=$(date +%s)
+        echo "Building with tag: ${TAG}"
+        docker build --tag nginx-proxy:${TAG} .
+        echo "${{ secrets.DOCKER_HUB_PASS }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
+        echo "Pushing with tag: ${TAG}"
+        docker push nginx-proxy:${TAG}
