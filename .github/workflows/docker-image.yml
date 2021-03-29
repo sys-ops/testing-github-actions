@@ -18,7 +18,7 @@ jobs:
       run: |
         TAG=$(date +%s)
         echo "Building with tag: ${TAG}"
-        docker build --tag nginx-proxy:${TAG} .
+        docker build --tag ${{ secrets.DOCKER_HUB_USER }}/nginx-proxy:${TAG} .
         echo "${{ secrets.DOCKER_HUB_PASS }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
         echo "Pushing with tag: ${TAG}"
-        docker push nginx-proxy:${TAG}
+        docker push ${{ secrets.DOCKER_HUB_USER }}/nginx-proxy:${TAG}
