@@ -29,6 +29,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Testing Step
+      run: |
+        DATE=$(date +%s)
+        echo ${DATE}
+        find .
+        env
+        exit 2
     - name: Setup ECR
       run: |
         # Login to AWS ECR
