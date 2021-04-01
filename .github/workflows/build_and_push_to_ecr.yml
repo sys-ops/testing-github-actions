@@ -56,7 +56,7 @@ jobs:
         #git commit -am 'Updated the image TAG of the pushed image'
         #git push origin main
     - name: Commit & Push changes
-      uses: actions-js/push@main
+      uses: actions-js/push@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: CleanUP
