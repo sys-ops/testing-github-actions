@@ -22,7 +22,7 @@ spec:
         - docker-entrypoint.sh
         name: docker-proxy
         # image: 00000000000000.dkr.ecr.my-region.amazonaws.com/example-eks:tag
-        image: 021155830612.dkr.ecr.us-east-1.amazonaws.com/nginx-proxy:58fdf78facaca788a090166f90aa825eb816c996
+        image: 021155830612.dkr.ecr.us-east-1.amazonaws.com/nginx-proxy:cb38d9c771da805cbdf03ac98d3aca22be6b9cf9
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 80
