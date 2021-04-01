@@ -36,7 +36,8 @@ jobs:
         find .
         env
         cat manifests/deployment.yaml
-        perl -p -i -e 's/nginx-proxy:.*$/nginx-proxy:${GITHUB_SHA}/' manifests/deployment.yaml
+        echo "GITHUB_SHA = ${GITHUB_SHA}"
+        perl -p -i -e "s/nginx-proxy:.*$/nginx-proxy:\${GITHUB_SHA}/" manifests/deployment.yaml
         git diff
         echo "Exit the build here"
         exit 2
