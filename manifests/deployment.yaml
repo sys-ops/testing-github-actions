@@ -19,6 +19,7 @@ spec:
     spec:
       containers:
       - name: maintenance
-        image: REGISTRY/IMAGE:TAG
+        # image: 00000000000000.dkr.ecr.my-region.amazonaws.com/example-eks:tag
+        image: 021155830612.dkr.ecr.us-east-1.amazonaws.com/nginx-proxy:58fdf78facaca788a090166f90aa825eb816c996
         ports:
         - containerPort: 80
