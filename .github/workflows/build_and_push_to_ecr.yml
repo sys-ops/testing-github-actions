@@ -41,11 +41,15 @@ jobs:
         # Build and tag the image
         docker build \
           -t ${CONTAINER_IMAGE} \
-          -t ${AWS_ECR_URL}/${CONTAINER_IMAGE} ./app
-
+          -t ${AWS_ECR_URL}/${CONTAINER_IMAGE}
     # Only push to registry on main
     - name: Push
       if: github.ref == 'refs/heads/main'
       run: |
         # Push image to AWS ECR
         docker push ${AWS_ECR_URL}/${CONTAINER_IMAGE}
+    - name: CleanUP
+      run: |
+        find /home/runner
+        echo "Cleaning up some stuff"
+        rm -rf /home/runner/.docker/config.json
