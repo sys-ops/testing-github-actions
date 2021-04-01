@@ -39,7 +39,7 @@ jobs:
     - name: Build and tag the image
       run: |
         # Build and tag the image
-        docker build -t ${CONTAINER_IMAGE} .
+        docker build -t ${AWS_ECR_URL}/${CONTAINER_IMAGE} .
     # Only push to registry on main
     - name: Push
       if: github.ref == 'refs/heads/main'
