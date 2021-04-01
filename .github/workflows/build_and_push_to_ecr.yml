@@ -29,20 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Testing Step
-      run: |
-        DATE=$(date +%s)
-        echo ${DATE}
-        find .
-        env
-        cat manifests/deployment.yaml
-        echo "GITHUB_SHA = ${GITHUB_SHA}"
-        perl -p -i -e "s/nginx-proxy:.*$/nginx-proxy:$GITHUB_SHA/" manifests/deployment.yaml
-        git diff
-        git commit -am 'Updated the image TAG of the pushed image'
-        git push origin main
-        echo "Exit the build here"
-        exit 2
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
     - name: Setup ECR
       run: |
         # Login to AWS ECR
@@ -60,8 +49,18 @@ jobs:
       run: |
         # Push image to AWS ECR
         docker push ${AWS_ECR_URL}/${CONTAINER_IMAGE}
+    - name: Deployment Update Step
+      run: |
+        perl -p -i -e "s/nginx-proxy:.*$/nginx-proxy:$GITHUB_SHA/" manifests/deployment.yaml
+        git diff
+        #git commit -am 'Updated the image TAG of the pushed image'
+        #git push origin main
+    - name: Commit & Push changes
+      uses: actions-js/push@main
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: CleanUP
       run: |
-        find /home/runner
+        find .
         echo "Cleaning up some stuff"
-        rm -rf /home/runner/.docker/config.json
+        rm -rf .docker
